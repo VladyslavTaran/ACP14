@@ -11,6 +11,28 @@ public class Group extends Entity {
     }
 
     @Override
+    public int hashCode() {
+        return getId()*getName().hashCode() + (isActive() ? 1 : 0);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Group))return false;
+        Group other = (Group) obj;
+        boolean res = true;
+        if (getId() != other.getId()) res &= false;
+        if (getName() != null && other.getName() != null){
+            if (!getName().equals(other.getName())) res &= false;
+        } else {
+            res &= false;
+        }
+        if (other.isActive() != isActive()) res &= false;
+        return res;
+    }
+
+    @Override
     public String toString() {
         return getId() + "\t" +
                 getName() + "\t" +

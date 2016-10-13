@@ -10,6 +10,10 @@ public class Constants {
     public static final String PROP_USER = "user";
     public static final String PROP_PWD = "pwd";
 
+    public static final String WRONG_DATA_MESSAGE = "Something was wrong with input data. Please verify.\n";
+    public static final String NO_ID_IN_DB = "No entity under pointed Id in DB.";
+    public static final String CONNECTION_DETAILS_ARE_WRONG = "Something is wrong with connection details.\n";
+
     public static final String FIELD_ID = "id";
     public static final String FIELD_NAME = "name";
     public static final String FIELD_GROUP_ID = "group_id";
