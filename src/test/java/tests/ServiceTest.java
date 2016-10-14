@@ -1,20 +1,14 @@
 package tests;
 
-import db.DAO;
-import db.Service;
-import model.Professor;
-import model.Student;
-import model.exception.NoSuchEntityException;
-import model.exception.WrongDataException;
+import db.*;
+import exception.NoSuchEntityException;
+import exception.WrongDataException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.omg.SendingContext.RunTime;
 
 import java.io.IOException;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Vlad on 11.10.2016.
@@ -24,7 +18,7 @@ public class ServiceTest {
     public static final String USER = PWD;
     public static final String DB_TO_RESTORE = "homework";
     public static final String BKP_PATH = DB_TO_RESTORE + "_bkp.sql";
-    private DAO controller;
+    private DAOStudent controller;
     private Service service;
 
     private void restoreDB(){
@@ -38,8 +32,11 @@ public class ServiceTest {
     @Before
     public void setUp() throws Exception {
         restoreDB();
-        controller = new DAO();
-        service = new Service(controller);
+        DAOStudent daoStudent = new DAOStudent();
+        DAOGroup daoGroup = new DAOGroup();
+        DAOSubject daoSubject = new DAOSubject();
+        DAOProfessor daoProfessor = new DAOProfessor();
+        service = new Service(daoStudent,daoGroup,daoSubject,daoProfessor);
     }
 
     @After

@@ -88,3 +88,91 @@
 2016-10-13 13:19:29 INFO  Service:79 - execute getAllStudentsByGroupId method with group id= 1
 2016-10-13 13:19:29 INFO  Service:89 - execute getGroupById method with group id= 1
 2016-10-13 13:19:29 INFO  Service:142 - execute getSubjectById method with subject Id=5
+2016-10-14 21:40:48 INFO  Service:115 - execute updateStudentInfo method with parameters: studentId= 12new name= testNamenew group id= 1isActive= true
+2016-10-14 21:40:48 INFO  Service:133 - execute getStudentById method with student id= 12
+2016-10-14 21:40:50 INFO  Service:102 - execute addStudent method with parameters: name= testNamegroupId= 1isActive= true
+2016-10-14 21:40:50 INFO  Service:214 - execute addSubject method with name= new subject description=description isActive=false
+2016-10-14 21:40:50 INFO  Service:258 - execute getProfessorById method with professor id= 3
+2016-10-14 21:40:50 INFO  Service:177 - execute addGroup method with name= new groupisActive= false
+2016-10-14 21:40:50 INFO  Service:161 - execute getGroupById method with group id= 1
+2016-10-14 21:40:50 INFO  Service:191 - execute updateGroupINfo with group id= 2 new name= updated name isActive= false
+2016-10-14 21:40:50 INFO  Service:161 - execute getGroupById method with group id= 2
+2016-10-14 21:40:50 INFO  Service:271 - execute updateProfessorInfo method with professor id=3 new name=new prof name new experience=55 new subject id=3 isActive=false
+2016-10-14 21:40:50 INFO  Service:258 - execute getProfessorById method with professor id= 3
+2016-10-14 21:40:51 INFO  Service:242 - addProfessor method with name=prof name experience=23 subject id= 2 isActive=false
+2016-10-14 21:40:51 INFO  Service:37 - execute getAllStudents method
+2016-10-14 21:40:51 INFO  Service:53 - execute getAllGroups method
+2016-10-14 21:40:51 ERROR Service:290 - execute updateSubjectInfo method with subject id=3 new name=updated subj name new description=updated description isActive=false
+2016-10-14 21:40:51 INFO  Service:229 - execute getSubjectById method with subject Id=3
+2016-10-14 21:40:51 INFO  Service:133 - execute getStudentById method with student id= 10
+2016-10-14 21:40:51 INFO  Service:85 - execute getAllProfessors method
+2016-10-14 21:40:51 INFO  Service:69 - execute getAllSubjects method
+2016-10-14 21:40:51 INFO  Service:146 - execute getAllStudentsByGroupId method with group id= 1
+2016-10-14 21:40:51 INFO  Service:161 - execute getGroupById method with group id= 1
+2016-10-14 21:40:51 INFO  Service:229 - execute getSubjectById method with subject Id=5
+2016-10-14 21:43:59 INFO  Service:115 - execute updateStudentInfo method with parameters: studentId= 12new name= testNamenew group id= 1isActive= true
+2016-10-14 21:43:59 INFO  Service:133 - execute getStudentById method with student id= 12
+2016-10-14 21:44:00 INFO  Service:102 - execute addStudent method with parameters: name= testNamegroupId= 1isActive= true
+2016-10-14 21:44:00 INFO  Service:214 - execute addSubject method with name= new subject description=description isActive=false
+2016-10-14 21:44:00 INFO  Service:258 - execute getProfessorById method with professor id= 3
+2016-10-14 21:44:00 INFO  Service:177 - execute addGroup method with name= new groupisActive= false
+2016-10-14 21:44:00 INFO  Service:161 - execute getGroupById method with group id= 1
+2016-10-14 21:44:00 INFO  Service:191 - execute updateGroupINfo with group id= 2 new name= updated name isActive= false
+2016-10-14 21:44:00 INFO  Service:161 - execute getGroupById method with group id= 2
+2016-10-14 21:44:01 INFO  Service:271 - execute updateProfessorInfo method with professor id=3 new name=new prof name new experience=55 new subject id=3 isActive=false
+2016-10-14 21:44:01 INFO  Service:258 - execute getProfessorById method with professor id= 3
+2016-10-14 21:44:01 INFO  Service:242 - addProfessor method with name=prof name experience=23 subject id= 2 isActive=false
+2016-10-14 21:44:01 INFO  Service:37 - execute getAllStudents method
+2016-10-14 21:44:01 INFO  Service:53 - execute getAllGroups method
+2016-10-14 21:44:01 ERROR Service:290 - execute updateSubjectInfo method with subject id=3 new name=updated subj name new description=updated description isActive=false
+2016-10-14 21:44:01 INFO  Service:229 - execute getSubjectById method with subject Id=3
+2016-10-14 21:44:01 INFO  Service:133 - execute getStudentById method with student id= 10
+2016-10-14 21:44:01 INFO  Service:85 - execute getAllProfessors method
+2016-10-14 21:44:01 INFO  Service:69 - execute getAllSubjects method
+2016-10-14 21:44:01 INFO  Service:146 - execute getAllStudentsByGroupId method with group id= 1
+2016-10-14 21:44:01 INFO  Service:161 - execute getGroupById method with group id= 1
+2016-10-14 21:44:01 INFO  Service:229 - execute getSubjectById method with subject Id=5
+2016-10-14 21:46:42 INFO  Service:115 - execute updateStudentInfo method with parameters: studentId= 12new name= testNamenew group id= 1isActive= true
+2016-10-14 21:46:42 INFO  Service:133 - execute getStudentById method with student id= 12
+2016-10-14 21:46:43 INFO  Service:102 - execute addStudent method with parameters: name= testNamegroupId= 1isActive= true
+2016-10-14 21:46:43 INFO  Service:214 - execute addSubject method with name= new subject description=description isActive=false
+2016-10-14 21:46:43 INFO  Service:258 - execute getProfessorById method with professor id= 3
+2016-10-14 21:46:43 INFO  Service:177 - execute addGroup method with name= new groupisActive= false
+2016-10-14 21:46:43 INFO  Service:161 - execute getGroupById method with group id= 1
+2016-10-14 21:46:43 INFO  Service:191 - execute updateGroupINfo with group id= 2 new name= updated name isActive= false
+2016-10-14 21:46:43 INFO  Service:161 - execute getGroupById method with group id= 2
+2016-10-14 21:46:43 INFO  Service:271 - execute updateProfessorInfo method with professor id=3 new name=new prof name new experience=55 new subject id=3 isActive=false
+2016-10-14 21:46:43 INFO  Service:258 - execute getProfessorById method with professor id= 3
+2016-10-14 21:46:43 INFO  Service:242 - addProfessor method with name=prof name experience=23 subject id= 2 isActive=false
+2016-10-14 21:46:43 INFO  Service:37 - execute getAllStudents method
+2016-10-14 21:46:44 INFO  Service:53 - execute getAllGroups method
+2016-10-14 21:46:44 ERROR Service:290 - execute updateSubjectInfo method with subject id=3 new name=updated subj name new description=updated description isActive=false
+2016-10-14 21:46:44 INFO  Service:229 - execute getSubjectById method with subject Id=3
+2016-10-14 21:46:44 INFO  Service:133 - execute getStudentById method with student id= 10
+2016-10-14 21:46:44 INFO  Service:85 - execute getAllProfessors method
+2016-10-14 21:46:44 INFO  Service:69 - execute getAllSubjects method
+2016-10-14 21:46:44 INFO  Service:146 - execute getAllStudentsByGroupId method with group id= 1
+2016-10-14 21:46:44 INFO  Service:161 - execute getGroupById method with group id= 1
+2016-10-14 21:46:44 INFO  Service:229 - execute getSubjectById method with subject Id=5
+2016-10-14 21:47:34 INFO  Service:115 - execute updateStudentInfo method with parameters: studentId= 12new name= testNamenew group id= 1isActive= true
+2016-10-14 21:47:34 INFO  Service:133 - execute getStudentById method with student id= 12
+2016-10-14 21:47:35 INFO  Service:102 - execute addStudent method with parameters: name= testNamegroupId= 1isActive= true
+2016-10-14 21:47:36 INFO  Service:214 - execute addSubject method with name= new subject description=description isActive=false
+2016-10-14 21:47:36 INFO  Service:258 - execute getProfessorById method with professor id= 3
+2016-10-14 21:47:36 INFO  Service:177 - execute addGroup method with name= new groupisActive= false
+2016-10-14 21:47:36 INFO  Service:161 - execute getGroupById method with group id= 1
+2016-10-14 21:47:36 INFO  Service:191 - execute updateGroupINfo with group id= 2 new name= updated name isActive= false
+2016-10-14 21:47:36 INFO  Service:161 - execute getGroupById method with group id= 2
+2016-10-14 21:47:36 INFO  Service:271 - execute updateProfessorInfo method with professor id=3 new name=new prof name new experience=55 new subject id=3 isActive=false
+2016-10-14 21:47:36 INFO  Service:258 - execute getProfessorById method with professor id= 3
+2016-10-14 21:47:36 INFO  Service:242 - addProfessor method with name=prof name experience=23 subject id= 2 isActive=false
+2016-10-14 21:47:36 INFO  Service:37 - execute getAllStudents method
+2016-10-14 21:47:36 INFO  Service:53 - execute getAllGroups method
+2016-10-14 21:47:36 ERROR Service:290 - execute updateSubjectInfo method with subject id=3 new name=updated subj name new description=updated description isActive=false
+2016-10-14 21:47:36 INFO  Service:229 - execute getSubjectById method with subject Id=3
+2016-10-14 21:47:36 INFO  Service:133 - execute getStudentById method with student id= 10
+2016-10-14 21:47:36 INFO  Service:85 - execute getAllProfessors method
+2016-10-14 21:47:36 INFO  Service:69 - execute getAllSubjects method
+2016-10-14 21:47:37 INFO  Service:146 - execute getAllStudentsByGroupId method with group id= 1
+2016-10-14 21:47:37 INFO  Service:161 - execute getGroupById method with group id= 1
+2016-10-14 21:47:37 INFO  Service:229 - execute getSubjectById method with subject Id=5
