@@ -3,7 +3,7 @@ package model;
 /**
  * Created by Vlad on 04.10.2016.
  */
-public class Entity {
+public class Inherit {
     private int id;
     private String name;
     private boolean active;

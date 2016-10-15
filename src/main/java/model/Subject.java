@@ -3,7 +3,7 @@ package model;
 /**
  * Created by Vlad on 04.10.2016.
  */
-public class Subject extends Entity {
+public class Subject extends Inherit {
     private String description;
 
     public Subject(int id, String name, String description, boolean active) {

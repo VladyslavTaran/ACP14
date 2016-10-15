@@ -3,7 +3,7 @@ package model;
 /**
  * Created by Vlad on 04.10.2016.
  */
-public class Professor extends Entity {
+public class Professor extends Inherit {
     private int experience;
     private String subject;
 

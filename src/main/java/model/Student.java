@@ -1,9 +1,16 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * Created by Vlad on 04.10.2016.
  */
-public class Student extends Entity{
+
+@Entity
+@Table(name = "students")
+public class Student extends Inherit {
     private int groupId;
 
     public Student(int id, String name, int groupId, boolean active) {
@@ -13,6 +20,10 @@ public class Student extends Entity{
         this.groupId = groupId;
     }
 
+    public Student() {
+    }
+
+    @Column
     public int getGroupId() {
         return groupId;
     }
