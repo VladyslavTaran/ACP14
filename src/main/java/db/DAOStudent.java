@@ -1,5 +1,6 @@
 package db;
 
+import model.Group;
 import model.Student;
 import exception.DBConnectionException;
 import exception.NoSuchEntityException;
@@ -48,7 +49,8 @@ public class DAOStudent {
                     students.add(new Student(
                                     resultset.getInt(Constants.FIELD_ID),
                                     resultset.getString(Constants.FIELD_NAME),
-                                    resultset.getInt(Constants.FIELD_GROUP_ID),
+                                    new Group(resultset.getInt(Constants.FIELD_GROUP_ID),
+                                            "group name",null,false),
                                     resultset.getBoolean(Constants.FIELD_ACTIVE)
                             )
                     );
@@ -129,7 +131,8 @@ public class DAOStudent {
                 student = new Student(
                                         resultset.getInt(Constants.FIELD_ID),
                                         resultset.getString(Constants.FIELD_NAME),
-                                        resultset.getInt(Constants.FIELD_GROUP_ID),
+                                        new Group(resultset.getInt(Constants.FIELD_GROUP_ID),
+                                                "group name",null,false),
                                         resultset.getBoolean(Constants.FIELD_ACTIVE)
                                      );
 
@@ -164,7 +167,8 @@ public class DAOStudent {
                     students.add(new Student(
                                             resultset.getInt(Constants.FIELD_ID),
                                             resultset.getString(Constants.FIELD_NAME),
-                                            resultset.getInt(Constants.FIELD_GROUP_ID),
+                                            new Group(resultset.getInt(Constants.FIELD_GROUP_ID),
+                                                    "group name",null,false),
                                             resultset.getBoolean(Constants.FIELD_ACTIVE)
                                             )
                                 );

@@ -1,17 +1,39 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * Created by Vlad on 04.10.2016.
  */
-public class Professor extends Inherit {
-    private int experience;
-    private String subject;
 
-    public Professor(int id, String name, int experience, String subject, boolean active) {
+@Entity
+@Table(name = "professors")
+public class Professor extends Inherit {
+    @Transient
+    private Subject subject;
+
+    @Column(name = "experience")
+    private int experience;
+
+    public Professor(int id, String name, int experience, Subject subject, boolean active) {
         setId(id);
         setName(name);
         setActive(active);
         this.experience = experience;
+        this.subject = subject;
+    }
+
+    public Professor() {
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
         this.subject = subject;
     }
 
@@ -21,14 +43,6 @@ public class Professor extends Inherit {
 
     public void setExperience(int experience) {
         this.experience = experience;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
     }
 
     @Override
@@ -56,7 +70,7 @@ public class Professor extends Inherit {
         if (isActive() != other.isActive()) res &= false;
         if (experience != other.getExperience()) res &= false;
         if (subject != null && other.getSubject() != null){
-            if (!getSubject().equals(other.getSubject())) res &= false;
+            if (getSubject().getId() != other.getSubject().getId()) res &= false;
         } else {
             res &= false;
         }
@@ -68,7 +82,7 @@ public class Professor extends Inherit {
         return getId() + "\t" +
                 getName() + "\t\t" +
                 getExperience() + "\t" +
-                getSubject() +
+                getSubject().getName() +
                 "active: " + isActive();
     }
 }

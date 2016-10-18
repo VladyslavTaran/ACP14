@@ -1,9 +1,18 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ExcludeSuperclassListeners;
+import javax.persistence.Table;
+
 /**
  * Created by Vlad on 04.10.2016.
  */
+
+@Entity
+@Table(name = "subjects")
 public class Subject extends Inherit {
+    @Column(name = "description")
     private String description;
 
     public Subject(int id, String name, String description, boolean active) {

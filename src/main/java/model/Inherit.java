@@ -1,11 +1,21 @@
 package model;
 
+import javax.persistence.*;
+
 /**
  * Created by Vlad on 04.10.2016.
  */
+
+@MappedSuperclass
 public class Inherit {
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO )
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "active")
     private boolean active;
 
     public int getId() {

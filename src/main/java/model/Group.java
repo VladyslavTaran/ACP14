@@ -1,13 +1,36 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.List;
+
 /**
  * Created by Vlad on 04.10.2016.
  */
+
+@Entity
+@Table(name = "groups")
 public class Group extends Inherit {
-    public Group(int id, String name, boolean active) {
+    @OneToMany(mappedBy = "id")
+    private List<Student> students;
+
+    public Group(int id, String name, List<Student> students, boolean active) {
         setId(id);
         setName(name);
         setActive(active);
+        setStudents(students);
+    }
+
+    public Group() {
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 
     @Override

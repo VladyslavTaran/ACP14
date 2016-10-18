@@ -1,8 +1,6 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Vlad on 04.10.2016.
@@ -11,25 +9,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "students")
 public class Student extends Inherit {
-    private int groupId;
+    @ManyToOne
+    @JoinColumn(name = "group_id", referencedColumnName = "id")
+    private Group group;
 
-    public Student(int id, String name, int groupId, boolean active) {
+    public Student(int id, String name, Group group, boolean active) {
         setName(name);
         setId(id);
         setActive(active);
-        this.groupId = groupId;
+        this.group = group;
     }
 
     public Student() {
     }
 
-    @Column
-    public int getGroupId() {
-        return groupId;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     @Override
@@ -37,7 +36,7 @@ public class Student extends Inherit {
         return getId()*
                 getName().hashCode() +
                 (isActive() ? 1 : 0) +
-                getGroupId();
+                getGroup().hashCode();
     }
 
     @Override
@@ -54,7 +53,7 @@ public class Student extends Inherit {
             res &= false;
         }
         if (isActive() != other.isActive()) res &= false;
-        if (groupId != other.getGroupId()) res &= false;
+        if (!getGroup().equals(other.getGroup())) res &= false;
         return res;
     }
 
@@ -62,7 +61,7 @@ public class Student extends Inherit {
     public String toString() {
         return getId() + " " +
                 getName() + "\t" +
-                groupId + " " +
+                group.getName() + " " +
                 "active:" + isActive();
     }
 }

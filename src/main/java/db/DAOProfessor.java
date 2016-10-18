@@ -3,6 +3,7 @@ package db;
 import model.Professor;
 import exception.DBConnectionException;
 import exception.WrongDataException;
+import model.Subject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +48,10 @@ public class DAOProfessor {
                                 resultset.getInt(Constants.FIELD_ID),
                                 resultset.getString(Constants.FIELD_NAME),
                                 resultset.getInt(Constants.FIELD_EXPERIENCE),
-                                resultset.getString(Constants.FIELD_SUBJECT),
+                                new Subject(resultset.getInt(Constants.FIELD_SUBJECT),
+                                            "new subject",
+                                            "new description",
+                                            false),
                                 resultset.getBoolean(Constants.FIELD_ACTIVE)
                         )
                 );
@@ -109,7 +113,10 @@ public class DAOProfessor {
                     resultset.getInt(Constants.FIELD_ID),
                     resultset.getString(Constants.FIELD_NAME),
                     resultset.getInt(Constants.FIELD_EXPERIENCE),
-                    resultset.getString(Constants.FIELD_SUBJECT),
+                    new Subject(resultset.getInt(Constants.FIELD_SUBJECT),
+                            "new subject",
+                            "new description",
+                            false),
                     resultset.getBoolean(Constants.FIELD_ACTIVE)
             );
         }

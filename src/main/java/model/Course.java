@@ -1,36 +1,61 @@
 package model;
 
+import javax.persistence.*;
+import java.util.List;
+
 /**
  * Created by Vlad on 04.10.2016.
  */
+
+@Entity
+@Table(name = "courses")
 public class Course {
-    private int groupId;
-    private int subjectId;
+    @Transient
+    private List<Group> groups;
+    @Transient
+    private List<Subject> subjects;
 
-    public Course(int groupId, int subjectId) {
-        this.groupId = groupId;
-        this.subjectId = subjectId;
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO )
+    private int id;
+
+    public Course(int id, List<Group> groups, List<Subject> subjects) {
+        this.id = id;
+        this.groups = groups;
+        this.subjects = subjects;
     }
 
-    public int getGroupId() {
-        return groupId;
+    public Course() {
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    public int getId() {
+        return id;
     }
 
-    public int getSubjectId() {
-        return subjectId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
+    public List<Subject> getSubjects() {
+        return subjects;
     }
+
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
 
     @Override
     public int hashCode() {
-        return getGroupId()*getSubjectId() + getGroupId();
+        return getGroups().hashCode() + getSubjects().hashCode();
     }
 
     @Override
@@ -40,14 +65,28 @@ public class Course {
         if (!(obj instanceof Course))return false;
         Course other = (Course) obj;
         boolean res = true;
-        if (groupId != other.getGroupId()) res &= false;
-        if (subjectId != other.getSubjectId()) res &= false;
+        if (groups != null && other.getGroups() !=null) {
+            if (!getGroups().equals(other.getGroups())){
+                res &= false;
+            }
+        }
+        if (subjects != null && other.getSubjects() !=null) {
+            if (!getSubjects().equals(other.getSubjects())){
+                res &= false;
+            }
+        }
         return res;
     }
 
     @Override
     public String toString() {
-        return getGroupId() + "\t" +
-                getSubjectId();
+        String res = "";
+        for (Group group : groups) {
+            res += group.getName();
+        }
+        for (Subject subject : subjects) {
+            res += subject.getName();
+        }
+        return res;
     }
 }
