@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Vlad on 04.10.2016.
@@ -12,10 +13,11 @@ public class Subject extends Inherit {
     @Column(name = "description")
     private String description;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    @MapsId
+    @OneToOne(mappedBy = "subject")
     private Professor professor;
+
+    @OneToMany(mappedBy = "group")
+    private List<Course> courses;
 
     public Subject(String name, String description, boolean active) {
         this.description = description;
@@ -24,6 +26,14 @@ public class Subject extends Inherit {
     }
 
     public Subject() {
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     public Professor getProfessor() {

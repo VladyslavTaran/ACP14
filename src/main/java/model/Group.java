@@ -15,12 +15,23 @@ public class Group extends Inherit {
     @OneToMany(mappedBy = "group")
     private List<Student> students;
 
+    @OneToMany(mappedBy = "group")
+    private List<Course> courses;
+
     public Group(String name, boolean active) {
         setName(name);
         setActive(active);
     }
 
     public Group() {
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     public List<Student> getStudents() {

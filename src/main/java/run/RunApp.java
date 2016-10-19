@@ -1,9 +1,6 @@
 package run;
 
-import model.Group;
-import model.Professor;
-import model.Student;
-import model.Subject;
+import model.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,15 +16,16 @@ public class RunApp {
         EntityManager manager = factory.createEntityManager();
         EntityTransaction transaction = manager.getTransaction();
 
-        //Group group = new Group("new group1", false);
-        //Student student = new Student("Student name", group, false);
+        Group group = new Group("new group1", false);
+        Student student = new Student("Student name", group, false);
+        Subject subject = new Subject("new Subject", "new description", false);
 
-        Subject subject = new Subject("New subject", "description", false);
         Professor professor = new Professor("professor'a name",23,subject,false);
+        Course course = new Course(group,subject);
 
         try{
             transaction.begin();
-            manager.persist(professor);
+            manager.persist(course);
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();

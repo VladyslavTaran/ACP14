@@ -9,7 +9,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "professors")
 public class Professor extends Inherit {
-    @OneToOne(mappedBy = "professor",cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST,orphanRemoval = true)
+    @JoinColumn(name = "subject_id", referencedColumnName = "id")
     private Subject subject;
 
     @Column(name = "experience")
