@@ -47,10 +47,8 @@ public class DAOStudent {
             if (resultset != null) {
                 while (resultset.next()) {
                     students.add(new Student(
-                                    resultset.getInt(Constants.FIELD_ID),
                                     resultset.getString(Constants.FIELD_NAME),
-                                    new Group(resultset.getInt(Constants.FIELD_GROUP_ID),
-                                            "group name",null,false),
+                                    new Group(resultset.getString("group name"),false),
                                     resultset.getBoolean(Constants.FIELD_ACTIVE)
                             )
                     );
@@ -129,10 +127,8 @@ public class DAOStudent {
             if (resultset != null) {
                 resultset.next();
                 student = new Student(
-                                        resultset.getInt(Constants.FIELD_ID),
                                         resultset.getString(Constants.FIELD_NAME),
-                                        new Group(resultset.getInt(Constants.FIELD_GROUP_ID),
-                                                "group name",null,false),
+                                        new Group(resultset.getString("group name"),false),
                                         resultset.getBoolean(Constants.FIELD_ACTIVE)
                                      );
 
@@ -165,10 +161,8 @@ public class DAOStudent {
             if (resultset != null) {
                 while(resultset.next()) {
                     students.add(new Student(
-                                            resultset.getInt(Constants.FIELD_ID),
                                             resultset.getString(Constants.FIELD_NAME),
-                                            new Group(resultset.getInt(Constants.FIELD_GROUP_ID),
-                                                    "group name",null,false),
+                                            new Group(resultset.getString("group name"),false),
                                             resultset.getBoolean(Constants.FIELD_ACTIVE)
                                             )
                                 );

@@ -45,9 +45,7 @@ public class DAOGroup {
         if (resultset != null) {
             while (resultset.next()) {
                 groups.add(new Group(
-                                    resultset.getInt(Constants.FIELD_ID),
                                     resultset.getString(Constants.FIELD_NAME),
-                                    null,
                                     resultset.getBoolean(Constants.FIELD_ACTIVE)
                                     )
                           );
@@ -75,9 +73,7 @@ public class DAOGroup {
             if (resultset != null) {
                 resultset.next();
                 group = new Group(
-                        resultset.getInt(Constants.FIELD_ID),
                         resultset.getString(Constants.FIELD_NAME),
-                        null,
                         resultset.getBoolean(Constants.FIELD_ACTIVE)
                 );
             }

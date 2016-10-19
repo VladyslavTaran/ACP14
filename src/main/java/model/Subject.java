@@ -1,9 +1,6 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ExcludeSuperclassListeners;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Vlad on 04.10.2016.
@@ -15,11 +12,26 @@ public class Subject extends Inherit {
     @Column(name = "description")
     private String description;
 
-    public Subject(int id, String name, String description, boolean active) {
+    @OneToOne
+    @JoinColumn(name = "id")
+    @MapsId
+    private Professor professor;
+
+    public Subject(String name, String description, boolean active) {
         this.description = description;
-        setId(id);
         setName(name);
         setActive(active);
+    }
+
+    public Subject() {
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 
     public String getDescription() {

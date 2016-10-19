@@ -1,9 +1,6 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 /**
  * Created by Vlad on 04.10.2016.
@@ -12,14 +9,13 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "professors")
 public class Professor extends Inherit {
-    @Transient
+    @OneToOne(mappedBy = "professor",cascade = CascadeType.ALL)
     private Subject subject;
 
     @Column(name = "experience")
     private int experience;
 
-    public Professor(int id, String name, int experience, Subject subject, boolean active) {
-        setId(id);
+    public Professor(String name, int experience, Subject subject, boolean active) {
         setName(name);
         setActive(active);
         this.experience = experience;

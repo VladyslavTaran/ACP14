@@ -44,7 +44,6 @@ public class DAOSubject {
         if (resultset != null) {
             while (resultset.next()) {
                 subjects.add(new Subject(
-                                resultset.getInt(Constants.FIELD_ID),
                                 resultset.getString(Constants.FIELD_NAME),
                                 resultset.getString(Constants.FIELD_DESCRIPTION),
                                 resultset.getBoolean(Constants.FIELD_ACTIVE)
@@ -86,7 +85,6 @@ public class DAOSubject {
         if (resultset != null) {
             resultset.next();
             subject = new Subject(
-                    resultset.getInt(Constants.FIELD_ID),
                     resultset.getString(Constants.FIELD_NAME),
                     resultset.getString(Constants.FIELD_DESCRIPTION),
                     resultset.getBoolean(Constants.FIELD_ACTIVE)

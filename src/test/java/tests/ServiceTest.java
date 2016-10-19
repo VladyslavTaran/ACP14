@@ -77,7 +77,7 @@ public class ServiceTest {
     public void testAddStudent() throws Exception {
         boolean actual = false;
         try {
-            actual = service.addStudent("testName",1,true);
+            actual = service.addStudent("testName",3,true);
         } catch (WrongDataException e) {
             e.printStackTrace();
         }

@@ -15,15 +15,11 @@ public class Inherit {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "active")
+    @Column(name = "active", columnDefinition = "INT(1)")
     private boolean active;
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

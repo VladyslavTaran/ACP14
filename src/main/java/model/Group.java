@@ -12,14 +12,12 @@ import java.util.List;
 @Entity
 @Table(name = "groups")
 public class Group extends Inherit {
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "group")
     private List<Student> students;
 
-    public Group(int id, String name, List<Student> students, boolean active) {
-        setId(id);
+    public Group(String name, boolean active) {
         setName(name);
         setActive(active);
-        setStudents(students);
     }
 
     public Group() {

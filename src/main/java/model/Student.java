@@ -9,13 +9,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "students")
 public class Student extends Inherit {
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "group_id", referencedColumnName = "id")
     private Group group;
 
-    public Student(int id, String name, Group group, boolean active) {
+    public Student(String name, Group group, boolean active) {
         setName(name);
-        setId(id);
         setActive(active);
         this.group = group;
     }

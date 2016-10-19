@@ -45,11 +45,9 @@ public class DAOProfessor {
         if (resultset != null) {
             while (resultset.next()) {
                 professors.add(new Professor(
-                                resultset.getInt(Constants.FIELD_ID),
                                 resultset.getString(Constants.FIELD_NAME),
                                 resultset.getInt(Constants.FIELD_EXPERIENCE),
-                                new Subject(resultset.getInt(Constants.FIELD_SUBJECT),
-                                            "new subject",
+                                new Subject("new subject",
                                             "new description",
                                             false),
                                 resultset.getBoolean(Constants.FIELD_ACTIVE)
@@ -110,10 +108,9 @@ public class DAOProfessor {
         if (resultset != null) {
             resultset.next();
             professor = new Professor(
-                    resultset.getInt(Constants.FIELD_ID),
                     resultset.getString(Constants.FIELD_NAME),
                     resultset.getInt(Constants.FIELD_EXPERIENCE),
-                    new Subject(resultset.getInt(Constants.FIELD_SUBJECT),
+                    new Subject(
                             "new subject",
                             "new description",
                             false),
