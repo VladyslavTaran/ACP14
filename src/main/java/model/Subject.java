@@ -16,7 +16,7 @@ public class Subject extends Inherit {
     @OneToOne(mappedBy = "subject")
     private Professor professor;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "subject")
     private List<Course> courses;
 
     public Subject(String name, String description, boolean active) {

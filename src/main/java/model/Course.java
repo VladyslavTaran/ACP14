@@ -15,11 +15,11 @@ public class Course {
     private int id;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "group_id", referencedColumnName = "id")
+    @JoinColumn(name = "group_id")
     private Group group;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "subject_id", referencedColumnName = "id")
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
     public Course(Group group, Subject subject) {

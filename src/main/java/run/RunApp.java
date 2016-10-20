@@ -25,6 +25,8 @@ public class RunApp {
 
         try{
             transaction.begin();
+            //manager.persist(group);
+            //manager.persist(subject);
             manager.persist(course);
             transaction.commit();
         } catch (Exception e) {
