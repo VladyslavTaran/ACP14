@@ -1,5 +1,6 @@
 package run;
 
+import db.GroupDAO;
 import model.*;
 
 import javax.persistence.EntityManager;
@@ -12,7 +13,7 @@ import javax.persistence.Persistence;
  */
 public class RunApp {
     public static void main(String[] args) {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("hibernate-unit");
+        /*EntityManagerFactory factory = Persistence.createEntityManagerFactory("hibernate-unit");
         EntityManager manager = factory.createEntityManager();
         EntityTransaction transaction = manager.getTransaction();
 
@@ -37,5 +38,11 @@ public class RunApp {
 
         //EntityManager manager = factory.createEntityManager();
         //manager.persist(new Student(1,"new name",1,true));
+        */
+
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("hibernate-unit");
+        GroupDAO dao = new GroupDAO(factory);
+
+        System.out.println(dao.getById(2));
     }
 }
