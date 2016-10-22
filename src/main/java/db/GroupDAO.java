@@ -2,59 +2,79 @@ package db;
 
 import model.Group;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Vlad on 10/21/2016.
  */
 public class GroupDAO implements IDAO<Group> {
-
-    private EntityManagerFactory factory;
+    private EntityManager manager;
 
     public GroupDAO(EntityManagerFactory factory) {
-        this.factory = factory;
+        manager = factory.createEntityManager();
     }
 
     @Override
     public Group add(Group obj) {
-        EntityManager manager = factory.createEntityManager();
         EntityTransaction transaction = manager.getTransaction();
-
         try {
             transaction.begin();
-            manager.persist(obj);
+                manager.persist(obj);
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
-        } finally {
-            manager.close();
         }
-
         return obj;
     }
 
     @Override
-    public boolean deactivate(Group obj) {
+    public boolean deactivate(int Id) {
+        EntityTransaction transaction = manager.getTransaction();
+        Group group = getById(Id);
+        if (group != null) {
+            try {
+                transaction.begin();
+                    group.setActive(false);
+                transaction.commit();
+                return true;
+            } catch (Exception e) {
+                transaction.rollback();
+            }
+        }
         return false;
     }
 
     @Override
     public boolean update(Group obj) {
+        EntityTransaction transaction = manager.getTransaction();
+
+        Group group = getById(obj.getId());
+
+        if (group != null) {
+            try {
+                transaction.begin();
+                group.setStudents(obj.getStudents());
+                group.setActive(obj.isActive());
+                group.setName(obj.getName());
+                group.setCourses(obj.getCourses());
+                transaction.commit();
+                return true;
+            } catch (Exception e) {
+                transaction.rollback();
+            }
+        }
         return false;
     }
 
     @Override
     public Group getById(int Id) {
-        EntityManager manager = factory.createEntityManager();
-        EntityTransaction transaction = manager.getTransaction();
+        return manager.find(Group.class, Id);
+    }
 
-        try {
-            Group group = manager.find(Group.class, Id);
-            return group;
-        } finally {
-            manager.close();
-        }
+    @Override
+    public List<Group> getAll() {
+        TypedQuery<Group> query = manager.createQuery(Constants.GET_ALL_GROUPS,Group.class);
+        return query.getResultList();
     }
 }

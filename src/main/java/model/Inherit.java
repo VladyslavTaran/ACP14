@@ -1,5 +1,7 @@
 package model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 /**
@@ -15,7 +17,7 @@ public class Inherit {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "active", columnDefinition = "INT(1)")
+    @Column(name = "active")
     private boolean active;
 
     public int getId() {
