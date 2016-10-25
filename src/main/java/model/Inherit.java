@@ -10,6 +10,7 @@ import javax.persistence.*;
 
 @MappedSuperclass
 public class Inherit {
+    @Column
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private int id;

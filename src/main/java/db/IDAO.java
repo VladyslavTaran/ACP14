@@ -12,4 +12,5 @@ public interface IDAO<T> {
     boolean update(T obj);
     T getById(int Id);
     List<T> getAll();
+    void clearTable();
 }

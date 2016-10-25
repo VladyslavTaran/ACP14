@@ -2,10 +2,7 @@ package db;
 
 import model.Subject;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -80,5 +77,14 @@ public class SubjectDAO implements IDAO<Subject> {
     public List<Subject> getAll() {
         TypedQuery<Subject> query = manager.createQuery(Constants.GET_ALL_SUBJECTS, Subject.class);
         return query.getResultList();
+    }
+
+    @Override
+    public void clearTable() {
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+        Query query = manager.createQuery("DELETE FROM Subject");
+        query.executeUpdate();
+        transaction.commit();
     }
 }

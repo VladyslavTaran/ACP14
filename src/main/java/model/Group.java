@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "groups")
 public class Group extends Inherit {
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", orphanRemoval = true)
     private List<Student> students;
 
     @OneToMany(mappedBy = "group")

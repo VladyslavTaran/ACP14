@@ -3,10 +3,7 @@ package db;
 import model.Professor;
 import model.Subject;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -63,7 +60,8 @@ public class ProfessorDAO implements IDAO<Professor> {
                 professor.setActive(obj.isActive());
                 professor.setName(obj.getName());
                 professor.setExperience(obj.getExperience());
-                professor.setSubject(obj.getSubject());
+                Subject subject = manager.find(Subject.class, obj.getSubject().getId());
+                professor.setSubject(subject);
                 transaction.commit();
                 return true;
             } catch (Exception e) {
@@ -82,5 +80,14 @@ public class ProfessorDAO implements IDAO<Professor> {
     public List<Professor> getAll() {
         TypedQuery<Professor> query = manager.createQuery(Constants.GET_ALL_PROFESSORS, Professor.class);
         return query.getResultList();
+    }
+
+    @Override
+    public void clearTable() {
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+        Query query = manager.createQuery("DELETE FROM Professor");
+        query.executeUpdate();
+        transaction.commit();
     }
 }

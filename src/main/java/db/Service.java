@@ -4,31 +4,31 @@ import model.Group;
 import model.Professor;
 import model.Student;
 import model.Subject;
-import exception.DBConnectionException;
 import exception.NoSuchEntityException;
-import exception.WrongDataException;
 import org.apache.log4j.*;
 
 import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Created by Vlad on 06.10.2016.
  */
 public class Service {
-    private StudentDAO daoStudent;
-    private GroupDAO daoGroup;
-    private SubjectDAO daoSubject;
-    private ProfessorDAO daoProfessor;
+    private IStudentDAO<Student> daoStudent;
+    private IDAO<Group> daoGroup;
+    private IDAO<Subject> daoSubject;
+    private IDAO<Professor> daoProfessor;
     private static Logger log = Logger.getLogger(Service.class.getName());
 
-    public Service(EntityManagerFactory factory) throws IOException {
-        daoStudent = new StudentDAO(factory);
-        daoGroup = new GroupDAO(factory);
-        daoSubject = new SubjectDAO(factory);
-        daoProfessor = new ProfessorDAO(factory);
+    public Service(IStudentDAO<Student> daoStudent,
+                   IDAO<Group> daoGroup,
+                   IDAO<Subject> daoSubject,
+                   IDAO<Professor> daoProfessor) throws IOException {
+        this.daoStudent = daoStudent;
+        this.daoGroup = daoGroup;
+        this.daoSubject = daoSubject;
+        this.daoProfessor = daoProfessor;
     }
 
     public List<Student> getAllStudents(){
@@ -121,7 +121,7 @@ public class Service {
         }
     }
 
-    public Group addGroup(String name, boolean isActive) throws WrongDataException {
+    public Group addGroup(String name, boolean isActive) {
         log.info("execute addGroup method with name= " + name +
                 "isActive= " + isActive);
         Group group = new Group(name, isActive);
@@ -144,7 +144,7 @@ public class Service {
         }
     }
 
-    public Subject addSubject(String name, String description, boolean isActive) throws WrongDataException {
+    public Subject addSubject(String name, String description, boolean isActive) {
         log.info("execute addSubject method with name= " + name +
                                                 " description=" + description +
                                                 " isActive=" + isActive);
@@ -186,7 +186,7 @@ public class Service {
         throw new NoSuchEntityException("There is no professor in db under Id=" + professorId);
     }
 
-    public boolean updateProfessorInfo(int professorIdToUpdate, String nameNew, int experienceNew, int subject_idNew, boolean isActiveNew) throws WrongDataException, NoSuchEntityException {
+    public boolean updateProfessorInfo(int professorIdToUpdate, String nameNew, int experienceNew, int subject_idNew, boolean isActiveNew) throws NoSuchEntityException {
         log.info("execute updateProfessorInfo method with professor id=" + professorIdToUpdate +
                                                         " new name=" + nameNew +
                                                         " new experience=" + experienceNew +
@@ -212,7 +212,7 @@ public class Service {
         }
     }
 
-    public boolean updateSubjectInfo(int subjectIdToUpdate, String nameNew, String descriptionNew, boolean isActiveNew) throws WrongDataException, NoSuchEntityException {
+    public boolean updateSubjectInfo(int subjectIdToUpdate, String nameNew, String descriptionNew, boolean isActiveNew) throws NoSuchEntityException {
         log.error("execute updateSubjectInfo method with subject id=" + subjectIdToUpdate +
                                                 " new name=" + nameNew +
                                                 " new description=" + descriptionNew +
@@ -228,5 +228,12 @@ public class Service {
             log.error("There is no subject in db under Id=" + subjectIdToUpdate);
             throw new NoSuchEntityException("There is no subject in db under Id=" + subjectIdToUpdate);
         }
+    }
+
+    public void clearDB(){
+        daoStudent.clearTable();
+        daoGroup.clearTable();
+        daoProfessor.clearTable();
+        daoSubject.clearTable();
     }
 }

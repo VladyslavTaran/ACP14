@@ -3,16 +3,13 @@ package db;
 import model.Group;
 import model.Student;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * Created by Vlad on 10/21/2016.
  */
-public class StudentDAO implements IDAO<Student> {
+public class StudentDAO implements IStudentDAO<Student> {
     private EntityManager manager;
 
     public StudentDAO(EntityManagerFactory factory) {
@@ -62,7 +59,8 @@ public class StudentDAO implements IDAO<Student> {
                 transaction.begin();
                 student.setActive(obj.isActive());
                 student.setName(obj.getName());
-                student.setGroup(obj.getGroup());
+                Group group = manager.find(Group.class, obj.getGroup().getId());
+                student.setGroup(group);
                 transaction.commit();
                 return true;
             } catch (Exception e) {
@@ -83,6 +81,16 @@ public class StudentDAO implements IDAO<Student> {
         return query.getResultList();
     }
 
+    @Override
+    public void clearTable() {
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+        Query query = manager.createQuery("DELETE FROM Student");
+        query.executeUpdate();
+        transaction.commit();
+    }
+
+    @Override
     public List<Student> getAllByGroupId(int groupId){
         TypedQuery<Student> query = manager.createQuery("SELECT s FROM Student s WHERE s.group_id =:groupId", Student.class);
         query.setParameter("groupId", groupId);

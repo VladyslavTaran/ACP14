@@ -13,7 +13,7 @@ public class Subject extends Inherit {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(mappedBy = "subject")
+    @OneToOne(mappedBy = "subject",orphanRemoval = true)
     private Professor professor;
 
     @OneToMany(mappedBy = "subject")

@@ -20,7 +20,7 @@ public class GroupDAO implements IDAO<Group> {
         EntityTransaction transaction = manager.getTransaction();
         try {
             transaction.begin();
-                manager.persist(obj);
+            manager.persist(obj);
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
@@ -35,7 +35,7 @@ public class GroupDAO implements IDAO<Group> {
         if (group != null) {
             try {
                 transaction.begin();
-                    group.setActive(false);
+                group.setActive(false);
                 transaction.commit();
                 return true;
             } catch (Exception e) {
@@ -76,5 +76,14 @@ public class GroupDAO implements IDAO<Group> {
     public List<Group> getAll() {
         TypedQuery<Group> query = manager.createQuery(Constants.GET_ALL_GROUPS,Group.class);
         return query.getResultList();
+    }
+
+    @Override
+    public void clearTable() {
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+        Query query = manager.createQuery("DELETE FROM Group");
+        query.executeUpdate();
+        transaction.commit();
     }
 }
