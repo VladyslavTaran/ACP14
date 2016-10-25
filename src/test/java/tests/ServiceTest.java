@@ -27,14 +27,25 @@ public class ServiceTest {
     private static IDAO<Subject> daoSubject = null;
     private static IDAO<Professor> daoProfessor = null;
 
+    private Student studentActual = null;
+    private Group groupActualFirst = null;
+    private Group groupActualSecond = null;
+    private Professor professorActual = null;
+    private Subject subjectActual1 = null;
+    private Subject subjectActual2 = null;
+    private Subject subjectActual3 = null;
+    private Subject subjectActual4 = null;
+    private Subject subjectActual5 = null;
+
     @BeforeClass
     public static void init(){
         EntityManagerFactory factory = Persistence.createEntityManagerFactory(Constants.JPA_UNIT);
-        //factory.createEntityManager().clear();
+
         daoStudent = new StudentDAO(factory);
         daoGroup = new GroupDAO(factory);
         daoSubject = new SubjectDAO(factory);
         daoProfessor = new ProfessorDAO(factory);
+
         try {
             service = new Service(daoStudent, daoGroup, daoSubject, daoProfessor);
         } catch (IOException e) {
@@ -44,30 +55,30 @@ public class ServiceTest {
 
     @Before
     public void setUp() {
-        service.addGroup("group1", false);
-        service.addGroup("group2", false);
+        groupActualFirst = service.addGroup("group1", false);
+        groupActualSecond = service.addGroup("group2", false);
 
         try {
-            service.addStudent("Kolia", 1, true);
-            service.addStudent("Vasia", 1, true);
-            service.addStudent("Petya", 2, true);
-            service.addStudent("Stepa", 2, true);
+            service.addStudent("Kolia", groupActualFirst.getId(), true);
+            service.addStudent("Vasia", groupActualFirst.getId(), true);
+            service.addStudent("Petya", groupActualSecond.getId(), true);
+            studentActual = service.addStudent("Stepa", groupActualSecond.getId(), true);
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
 
-        service.addSubject("Subject1", "description", true);
-        service.addSubject("Subject2", "description", true);
-        service.addSubject("Subject3", "description", true);
-        service.addSubject("Subject4", "description", true);
-        service.addSubject("Subject5", "description", true);
+        subjectActual1 = service.addSubject("Subject1", "description", true);
+        subjectActual2 = service.addSubject("Subject2", "description", true);
+        subjectActual3 = service.addSubject("Subject3", "description", true);
+        subjectActual4 = service.addSubject("Subject4", "description", true);
+        subjectActual5 = service.addSubject("Subject5", "description", true);
 
         try {
-            service.addProfessor("name1", 12, 1, true);
-            service.addProfessor("name2", 13, 1, true);
-            service.addProfessor("name3", 23, 1, true);
-            service.addProfessor("name4", 6, 1, true);
-            service.addProfessor("name5", 8, 1, true);
+            service.addProfessor("name1", 12, subjectActual1.getId(), true);
+            service.addProfessor("name2", 13, subjectActual2.getId(), true);
+            service.addProfessor("name3", 23, subjectActual3.getId(), true);
+            service.addProfessor("name4", 6, subjectActual4.getId(), true);
+            professorActual = service.addProfessor("name5", 8, subjectActual5.getId(), true);
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
@@ -111,8 +122,8 @@ public class ServiceTest {
         Student actual = null;
         Student expected = null;
         try {
-            actual = new Student("Test", service.getGroupById(2), true);
-            expected = service.addStudent("Test", 2, true);
+            actual = new Student("Test", groupActualFirst, true);
+            expected = service.addStudent("Test", groupActualFirst.getId(), true);
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
@@ -125,7 +136,7 @@ public class ServiceTest {
         String expected = null;
         try {
             actual = "new name";
-            expected = service.updateStudentInfo(1, actual, 1, false).getName();
+            expected = service.updateStudentInfo(studentActual.getId(), actual, groupActualFirst.getId(), false).getName();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
@@ -137,8 +148,8 @@ public class ServiceTest {
         int actual = 0;
         int expected = 0;
         try {
-            actual = 2;
-            expected = service.getStudentById(2).getId();
+            actual = studentActual.getId();
+            expected = service.getStudentById(studentActual.getId()).getId();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
@@ -149,7 +160,7 @@ public class ServiceTest {
     public void testGetAllStudentsByGroupId() {
         int actual = 0;
         try {
-            actual = service.getAllStudentsByGroupId(1).size();
+            actual = service.getAllStudentsByGroupId(groupActualFirst.getId()).size();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
@@ -161,7 +172,7 @@ public class ServiceTest {
     public void testGetGroupById() {
         String actual = null;
         try {
-            actual = service.getGroupById(1).getName();
+            actual = service.getGroupById(groupActualFirst.getId()).getName();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
@@ -175,7 +186,7 @@ public class ServiceTest {
         Group expected = null;
 
         actual = new Group("Test group", false);
-        expected = service.addGroup("Test group", true);
+        expected = service.addGroup("Test group", false);
 
         Assert.assertEquals(actual, expected);
     }
@@ -186,7 +197,7 @@ public class ServiceTest {
         String expected = null;
         try {
             actual = "new name";
-            expected = service.updateGroupInfo(1, actual, false).getName();
+            expected = service.updateGroupInfo(groupActualFirst.getId(), actual, false).getName();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
@@ -208,11 +219,11 @@ public class ServiceTest {
     public void testGetSubjectById() {
         String actual = null;
         try {
-            actual = service.getSubjectById(5).getName();
+            actual = service.getSubjectById(subjectActual5.getId()).getName();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
-        String expected = "subject5";
+        String expected = "Subject5";
         Assert.assertEquals(expected, actual);
     }
 
@@ -222,7 +233,7 @@ public class ServiceTest {
         String expected = null;
         try {
             actual = "New name";
-            expected = service.addProfessor("New name", 23, 3, false).getName();
+            expected = service.addProfessor("New name", 23, subjectActual3.getId(), false).getName();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
@@ -234,8 +245,8 @@ public class ServiceTest {
         String actual = null;
         String expected = null;
         try {
-            actual = "name4";
-            expected = service.getProfessorById(4).getName();
+            actual = "name5";
+            expected = service.getProfessorById(professorActual.getId()).getName();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
@@ -246,7 +257,7 @@ public class ServiceTest {
     public void testUpdateProfessorInfo() {
         boolean res = false;;
         try {
-            res = service.updateProfessorInfo(2, "New name", 23, 3, false);
+            res = service.updateProfessorInfo(professorActual.getId(), "New name", 23, subjectActual3.getId(), false);
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
@@ -257,7 +268,7 @@ public class ServiceTest {
     public void testUpdateSubjectInfo(){
         boolean res = false;
         try {
-            res = service.updateSubjectInfo(1, "New name", "New description", false);
+            res = service.updateSubjectInfo(subjectActual1.getId(), "New name", "New description", false);
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }

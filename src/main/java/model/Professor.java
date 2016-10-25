@@ -58,7 +58,6 @@ public class Professor extends Inherit {
         if (!(obj instanceof Professor))return false;
         Professor other = (Professor) obj;
         boolean res = true;
-        if (getId() != other.getId()) res &= false;
         if (getName() != null && other.getName() != null){
             if (!getName().equals(other.getName())) res &= false;
         } else {

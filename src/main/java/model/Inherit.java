@@ -1,5 +1,6 @@
 package model;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -10,7 +11,6 @@ import javax.persistence.*;
 
 @MappedSuperclass
 public class Inherit {
-    @Column
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private int id;

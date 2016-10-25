@@ -42,10 +42,9 @@ public class Student extends Inherit {
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj == this) return true;
-        if (!(obj instanceof String ))return false;
+        if (!(obj instanceof Student ))return false;
         Student other = (Student) obj;
         boolean res = true;
-        if (getId() != other.getId()) res &= false;
         if (getName() != null && other.getName() != null){
             if (!getName().equals(other.getName())) res &= false;
         } else {

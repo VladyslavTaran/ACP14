@@ -82,18 +82,18 @@ public class StudentDAO implements IStudentDAO<Student> {
     }
 
     @Override
+    public List<Student> getAllByGroupId(int groupId){
+        TypedQuery<Student> query = manager.createQuery("SELECT s FROM Student s WHERE s.group.id =:groupId", Student.class);
+        query.setParameter("groupId", groupId);
+        return query.getResultList();
+    }
+
+    @Override
     public void clearTable() {
         EntityTransaction transaction = manager.getTransaction();
         transaction.begin();
         Query query = manager.createQuery("DELETE FROM Student");
         query.executeUpdate();
         transaction.commit();
-    }
-
-    @Override
-    public List<Student> getAllByGroupId(int groupId){
-        TypedQuery<Student> query = manager.createQuery("SELECT s FROM Student s WHERE s.group_id =:groupId", Student.class);
-        query.setParameter("groupId", groupId);
-        return query.getResultList();
     }
 }

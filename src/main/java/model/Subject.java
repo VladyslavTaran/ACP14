@@ -67,7 +67,6 @@ public class Subject extends Inherit {
         if (!(obj instanceof Subject))return false;
         Subject other = (Subject) obj;
         boolean res = true;
-        if (getId() != other.getId()) res &= false;
         if (getName() != null && other.getName() != null){
             if (!getName().equals(other.getName())) res &= false;
         } else {
