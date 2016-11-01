@@ -15,15 +15,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 
-@Component
 public class Service {
-    @Autowired
     private IStudentDAO<Student> daoStudent;
-    @Autowired
     private IDAO<Group> daoGroup;
-    @Autowired
     private IDAO<Subject> daoSubject;
-    @Autowired
     private IDAO<Professor> daoProfessor;
 
     private static Logger log = Logger.getLogger(Service.class.getName());

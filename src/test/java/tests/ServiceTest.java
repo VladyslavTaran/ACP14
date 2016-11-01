@@ -16,8 +16,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import service.Service;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:app-xml-annot-context.xml"})
+import javax.persistence.EntityManagerFactory;
+
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations={"classpath:app-xml-annot-context.xml"})
 public class ServiceTest {
     @Autowired
     private Service service;
@@ -33,6 +35,8 @@ public class ServiceTest {
     private Subject subjectActual5 = null;
 
     public void init(){
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("app-xml-annot-context.xml");
+        service = applicationContext.getBean(Service.class);
     }
 
     @Before

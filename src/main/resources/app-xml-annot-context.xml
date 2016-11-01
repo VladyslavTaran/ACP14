@@ -16,7 +16,9 @@
 
         <tx:annotation-driven />
         <context:annotation-config/>
-        <context:component-scan base-package="service,model,db"/>
+        <!--<context:component-scan base-package="service,model,db"/>-->
+
+        <import resource="app-context.xml"/>
 
         <context:property-placeholder location="app.properties"/>
 

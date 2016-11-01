@@ -4,8 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-        <!--<bean id="studentDAO" class="db.StudentDAO">
-        </bean>-->
+        <bean id="studentDAO" class="db.StudentDAO">
+        </bean>
 
         <bean id="groupDAO" class="db.GroupDAO">
         </bean>

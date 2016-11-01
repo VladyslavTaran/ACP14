@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.util.List;
 
-@Component
 public class GroupDAO implements IDAO<Group> {
     @PersistenceContext
     private EntityManager manager;
