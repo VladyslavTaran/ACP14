@@ -2,16 +2,12 @@ package tests;
 
 import db.*;
 import exception.NoSuchEntityException;
-import model.Group;
-import model.Professor;
-import model.Student;
-import model.Subject;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.io.IOException;
-import java.nio.file.ProviderNotFoundException;
 
 /**
  * Created by Vlad on 11.10.2016.
@@ -19,245 +15,140 @@ import java.nio.file.ProviderNotFoundException;
 public class ServiceTest {
     public static final String PWD = "root";
     public static final String USER = PWD;
-    public static final String DB_TO_RESTORE = "homeworkjpa";
+    public static final String DB_TO_RESTORE = "homework";
     public static final String BKP_PATH = DB_TO_RESTORE + "_bkp.sql";
-    private static Service service;
-    private static IStudentDAO<Student> daoStudent = null;
-    private static IDAO<Group> daoGroup = null;
-    private static IDAO<Subject> daoSubject = null;
-    private static IDAO<Professor> daoProfessor = null;
+    private DAOStudent controller;
+    private Service service;
 
-    private Student studentActual = null;
-    private Group groupActualFirst = null;
-    private Group groupActualSecond = null;
-    private Professor professorActual = null;
-    private Subject subjectActual1 = null;
-    private Subject subjectActual2 = null;
-    private Subject subjectActual3 = null;
-    private Subject subjectActual4 = null;
-    private Subject subjectActual5 = null;
-
-    @BeforeClass
-    public static void init(){
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory(Constants.JPA_UNIT);
-
-        daoStudent = new StudentDAO(factory);
-        daoGroup = new GroupDAO(factory);
-        daoSubject = new SubjectDAO(factory);
-        daoProfessor = new ProfessorDAO(factory);
-
+    private void restoreDB(){
         try {
-            service = new Service(daoStudent, daoGroup, daoSubject, daoProfessor);
+            Process runtimeProcess = Runtime.getRuntime().exec("mysql -u" + USER + " -p" + PWD + " " + DB_TO_RESTORE + " < " + BKP_PATH);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Before
-    public void setUp() {
-        groupActualFirst = service.addGroup("group1", false);
-        groupActualSecond = service.addGroup("group2", false);
-
-        try {
-            service.addStudent("Kolia", groupActualFirst.getId(), true);
-            service.addStudent("Vasia", groupActualFirst.getId(), true);
-            service.addStudent("Petya", groupActualSecond.getId(), true);
-            studentActual = service.addStudent("Stepa", groupActualSecond.getId(), true);
-        } catch (NoSuchEntityException e) {
-            e.printStackTrace();
-        }
-
-        subjectActual1 = service.addSubject("Subject1", "description", true);
-        subjectActual2 = service.addSubject("Subject2", "description", true);
-        subjectActual3 = service.addSubject("Subject3", "description", true);
-        subjectActual4 = service.addSubject("Subject4", "description", true);
-        subjectActual5 = service.addSubject("Subject5", "description", true);
-
-        try {
-            service.addProfessor("name1", 12, subjectActual1.getId(), true);
-            service.addProfessor("name2", 13, subjectActual2.getId(), true);
-            service.addProfessor("name3", 23, subjectActual3.getId(), true);
-            service.addProfessor("name4", 6, subjectActual4.getId(), true);
-            professorActual = service.addProfessor("name5", 8, subjectActual5.getId(), true);
-        } catch (NoSuchEntityException e) {
-            e.printStackTrace();
-        }
+    public void setUp() throws Exception {
+        restoreDB();
+        DAOStudent daoStudent = new DAOStudent();
+        DAOGroup daoGroup = new DAOGroup();
+        DAOSubject daoSubject = new DAOSubject();
+        DAOProfessor daoProfessor = new DAOProfessor();
+        service = new Service(daoStudent,daoGroup,daoSubject,daoProfessor);
     }
 
     @After
-    public void tearDown() {
-        service.clearDB();
+    public void tearDown() throws Exception {
+        controller = null;
+        service = null;
     }
 
     @Test
-    public void testGetAllStudents() {
+    public void testGetAllStudents() throws Exception {
         int actual = service.getAllStudents().size();
-        int expected = 4;
-        Assert.assertEquals(expected, actual);
+        int expected = 45;
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
-    public void testGetAllGroups() {
+    public void testGetAllGroups() throws Exception {
         int actual = service.getAllGroups().size();
-        int expected = 2;
+        int expected = 6;
         Assert.assertEquals(expected,actual);
     }
 
     @Test
-    public void testGetAllSubjects() {
+    public void testGetAllSubjects() throws Exception {
         int actual = service.getAllSubjects().size();
-        int expected = 5;
+        int expected = 15;
         Assert.assertEquals(expected,actual);
     }
 
     @Test
-    public void testGetAllProfessors() {
+    public void testGetAllProfessors() throws Exception {
         int actual = service.getAllProfessors().size();
-        int expected = 5;
+        int expected = 14;
         Assert.assertEquals(expected,actual);
     }
 
     @Test
-    public void testAddStudent() {
-        Student actual = null;
-        Student expected = null;
+    public void testAddStudent() throws Exception {
+        boolean actual = false;
         try {
-            actual = new Student("Test", groupActualFirst, true);
-            expected = service.addStudent("Test", groupActualFirst.getId(), true);
-        } catch (NoSuchEntityException e) {
+            actual = service.addStudent("testName",3,true);
+        } catch (WrongDataException e) {
             e.printStackTrace();
         }
-        Assert.assertEquals(actual, expected);
+        Assert.assertTrue(actual);
     }
 
     @Test
-    public void testUpdateStudentInfo() {
-        String actual = null;
-        String expected = null;
+    public void testUpdateStudentInfo() throws Exception {
+        boolean actual = false;
         try {
-            actual = "new name";
-            expected = service.updateStudentInfo(studentActual.getId(), actual, groupActualFirst.getId(), false).getName();
+            actual = service.updateStudentInfo(12,"testName",1,true);
+        } catch (WrongDataException e) {
+            e.printStackTrace();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
-        Assert.assertEquals(actual, expected);
+        Assert.assertTrue(actual);
     }
 
     @Test
-    public void testGetStudentById() {
-        int actual = 0;
-        int expected = 0;
+    public void testGetStudentById() throws Exception {
         try {
-            actual = studentActual.getId();
-            expected = service.getStudentById(studentActual.getId()).getId();
+            String actual = service.getStudentById(10).getName();
+            String expected = "Dmytro";
+            Assert.assertEquals(expected,actual);
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
-        Assert.assertEquals(actual, expected);
     }
 
     @Test
-    public void testGetAllStudentsByGroupId() {
+    public void testGetAllStudentsByGroupId() throws Exception {
         int actual = 0;
         try {
-            actual = service.getAllStudentsByGroupId(groupActualFirst.getId()).size();
+            actual = service.getAllStudentsByGroupId(1).size();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
-        int expected = 2;
+        int expected = 14;
         Assert.assertEquals(expected,actual);
     }
 
     @Test
-    public void testGetGroupById() {
+    public void testGetGroupById() throws Exception {
         String actual = null;
         try {
-            actual = service.getGroupById(groupActualFirst.getId()).getName();
+            actual = service.getGroupById(1).getName();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
-        String expected = "group1";
+        String expected = "ACP14";
         Assert.assertEquals(expected,actual);
     }
 
     @Test
-    public void testAddGroup() {
-        Group actual = null;
-        Group expected = null;
-
-        actual = new Group("Test group", false);
-        expected = service.addGroup("Test group", false);
-
-        Assert.assertEquals(actual, expected);
-    }
-
-    @Test
-    public void testUpdateGroupInfo() {
-        String actual = null;
-        String expected = null;
+    public void testAddGroup() throws Exception {
+        boolean res = false;
         try {
-            actual = "new name";
-            expected = service.updateGroupInfo(groupActualFirst.getId(), actual, false).getName();
-        } catch (NoSuchEntityException e) {
+            res = service.addGroup("new group", false);
+        } catch (WrongDataException e) {
             e.printStackTrace();
         }
-        Assert.assertEquals(actual, expected);
+        Assert.assertTrue(res);
     }
 
     @Test
-    public void testAddSubject() {
-        Subject actual = null;
-        Subject expected = null;
-
-        actual = new Subject("Test subject", "test description", false);
-        expected = service.addSubject("Test subject", "test description", false);
-
-        Assert.assertEquals(actual, expected);
-    }
-
-    @Test
-    public void testGetSubjectById() {
-        String actual = null;
+    public void testUpdateGroupInfo() throws Exception {
+        boolean res = false;
         try {
-            actual = service.getSubjectById(subjectActual5.getId()).getName();
-        } catch (NoSuchEntityException e) {
+            res = service.updateGroupInfo(2,"updated name",false);
+        } catch (WrongDataException e) {
             e.printStackTrace();
-        }
-        String expected = "Subject5";
-        Assert.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testAddProfessor(){
-        String actual = null;
-        String expected = null;
-        try {
-            actual = "New name";
-            expected = service.addProfessor("New name", 23, subjectActual3.getId(), false).getName();
-        } catch (NoSuchEntityException e) {
-            e.printStackTrace();
-        }
-        Assert.assertEquals(actual, expected);
-    }
-
-    @Test
-    public void testGetProfessorById(){
-        String actual = null;
-        String expected = null;
-        try {
-            actual = "name5";
-            expected = service.getProfessorById(professorActual.getId()).getName();
-        } catch (NoSuchEntityException e) {
-            e.printStackTrace();
-        }
-        Assert.assertEquals(actual, expected);
-    }
-
-    @Test
-    public void testUpdateProfessorInfo() {
-        boolean res = false;;
-        try {
-            res = service.updateProfessorInfo(professorActual.getId(), "New name", 23, subjectActual3.getId(), false);
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
@@ -265,10 +156,71 @@ public class ServiceTest {
     }
 
     @Test
-    public void testUpdateSubjectInfo(){
+    public void testAddSubject() throws Exception {
         boolean res = false;
         try {
-            res = service.updateSubjectInfo(subjectActual1.getId(), "New name", "New description", false);
+            res = service.addSubject("new subject", "description", false);
+        } catch (WrongDataException e) {
+            e.printStackTrace();
+        }
+        Assert.assertTrue(res);
+    }
+
+    @Test
+    public void testGetSubjectById() throws Exception {
+        String actual = null;
+        try {
+            actual = service.getSubjectById(5).getName();
+        } catch (NoSuchEntityException e) {
+            e.printStackTrace();
+        }
+        String expected = "Art";
+        Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void testAddProfessor() throws Exception {
+        boolean res = false;
+        try {
+            res = service.addProfessor("prof name",23,2,false);
+        } catch (WrongDataException e) {
+            e.printStackTrace();
+        }
+        Assert.assertTrue(res);
+    }
+
+    @Test
+    public void testGetProfessorById() throws Exception {
+        String actual = null;
+        try {
+            actual = service.getProfessorById(3).getName();
+        } catch (NoSuchEntityException e) {
+            e.printStackTrace();
+        }
+        String expected = "Kant";
+        Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void testUpdateProfessorInfo() throws Exception {
+        boolean res = false;
+        try {
+            res = service.updateProfessorInfo(3,"new prof name",55,3,false);
+        } catch (WrongDataException e) {
+            e.printStackTrace();
+        } catch (NoSuchEntityException e) {
+            e.printStackTrace();
+        }
+        Assert.assertTrue(res);
+    }
+
+    @Test
+    public void testUpdateSubjectInfo() throws Exception {
+        boolean res = false;
+        try {
+            res = service.updateSubjectInfo(3,"updated subj name","updated description",false);
+        } catch (WrongDataException e) {
+            e.printStackTrace();
         } catch (NoSuchEntityException e) {
             e.printStackTrace();
         }
