@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-        <bean id="dao" class="spring.Dao">
-            <property name="name" value="daoname"/>
-            <property name="id" value="123"/>
+        <!--<bean id="studentDAO" class="db.StudentDAO">
+        </bean>-->
+
+        <bean id="groupDAO" class="db.GroupDAO">
         </bean>
 
-        <bean id="service" class="spring.Service">
-            <constructor-arg ref="dao"/>
+        <bean id="subjectDAO" class="db.SubjectDAO">
         </bean>
 
-        <bean id="view" class="spring.View">
-            <property name="service" ref="service"/>
+        <bean id="professorDAO" class="db.ProfessorDAO">
+        </bean>
+
+        <bean id="service" class="service.Service">
+            <constructor-arg ref="studentDAO"/>
+            <constructor-arg ref="groupDAO"/>
+            <constructor-arg ref="subjectDAO"/>
+            <constructor-arg ref="professorDAO"/>
         </bean>
 
 </beans>

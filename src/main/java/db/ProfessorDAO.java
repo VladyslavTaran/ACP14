@@ -1,72 +1,53 @@
 package db;
 
+import db.interfaces.IDAO;
 import model.Professor;
 import model.Subject;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by Vlad on 22.10.2016.
- */
+@Component
 public class ProfessorDAO implements IDAO<Professor> {
+    @PersistenceContext
     private EntityManager manager;
 
-    public ProfessorDAO(EntityManagerFactory factory) {
-        manager = factory.createEntityManager();
+    public ProfessorDAO() {
     }
 
     @Override
+    @Transactional
     public Professor add(Professor obj) {
-        EntityTransaction transaction = manager.getTransaction();
-        try {
-            transaction.begin();
-            Subject subject = manager.find(Subject.class, obj.getSubject().getId());
-            obj.setSubject(subject);
-            manager.persist(obj);
-            transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
-        }
+        Subject subject = manager.find(Subject.class, obj.getSubject().getId());
+        obj.setSubject(subject);
+        manager.persist(obj);
         return obj;
     }
 
     @Override
+    @Transactional
     public boolean deactivate(int Id) {
-        EntityTransaction transaction = manager.getTransaction();
         Professor professor = getById(Id);
         if (professor != null) {
-            try {
-                transaction.begin();
-                professor.setActive(false);
-                transaction.commit();
-                return true;
-            } catch (Exception e) {
-                transaction.rollback();
-            }
+            professor.setActive(false);
+            return true;
         }
         return false;
     }
 
     @Override
+    @Transactional
     public boolean update(Professor obj) {
-        EntityTransaction transaction = manager.getTransaction();
-
         Professor professor = getById(obj.getId());
-
         if (professor != null) {
-            try {
-                transaction.begin();
-                professor.setActive(obj.isActive());
-                professor.setName(obj.getName());
-                professor.setExperience(obj.getExperience());
-                Subject subject = manager.find(Subject.class, obj.getSubject().getId());
-                professor.setSubject(subject);
-                transaction.commit();
-                return true;
-            } catch (Exception e) {
-                transaction.rollback();
-            }
+            professor.setActive(obj.isActive());
+            professor.setName(obj.getName());
+            professor.setExperience(obj.getExperience());
+            Subject subject = manager.find(Subject.class, obj.getSubject().getId());
+            professor.setSubject(subject);
+            return true;
         }
         return false;
     }
@@ -83,11 +64,9 @@ public class ProfessorDAO implements IDAO<Professor> {
     }
 
     @Override
+    @Transactional
     public void clearTable() {
-        EntityTransaction transaction = manager.getTransaction();
-        transaction.begin();
         Query query = manager.createQuery("DELETE FROM Professor");
         query.executeUpdate();
-        transaction.commit();
     }
 }

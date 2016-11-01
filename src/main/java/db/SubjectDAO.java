@@ -1,69 +1,50 @@
 package db;
 
+import db.interfaces.IDAO;
 import model.Subject;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by Vlad on 22.10.2016.
- */
+@Component
 public class SubjectDAO implements IDAO<Subject> {
+    @PersistenceContext
     private EntityManager manager;
 
-    public SubjectDAO(EntityManagerFactory factory) {
-        this.manager = factory.createEntityManager();
+    public SubjectDAO() {
     }
 
     @Override
+    @Transactional
     public Subject add(Subject obj) {
-        EntityTransaction transaction = manager.getTransaction();
-        try {
-            transaction.begin();
-            manager.persist(obj);
-            transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
-        }
+        manager.persist(obj);
         return obj;
     }
 
     @Override
+    @Transactional
     public boolean deactivate(int Id) {
-        EntityTransaction transaction = manager.getTransaction();
         Subject subject = getById(Id);
         if (subject != null) {
-            try {
-                transaction.begin();
-                subject.setActive(false);
-                transaction.commit();
-                return true;
-            } catch (Exception e) {
-                transaction.rollback();
-            }
+            subject.setActive(false);
+            return true;
         }
         return false;
     }
 
     @Override
+    @Transactional
     public boolean update(Subject obj) {
-        EntityTransaction transaction = manager.getTransaction();
-
         Subject subject = getById(obj.getId());
-
         if (subject != null) {
-            try {
-                transaction.begin();
-                subject.setActive(obj.isActive());
-                subject.setName(obj.getName());
-                subject.setCourses(obj.getCourses());
-                subject.setDescription(obj.getDescription());
-                subject.setProfessor(obj.getProfessor());
-                transaction.commit();
-                return true;
-            } catch (Exception e) {
-                transaction.rollback();
-            }
+            subject.setActive(obj.isActive());
+            subject.setName(obj.getName());
+            subject.setCourses(obj.getCourses());
+            subject.setDescription(obj.getDescription());
+            subject.setProfessor(obj.getProfessor());
+            return true;
         }
         return false;
     }
@@ -80,11 +61,9 @@ public class SubjectDAO implements IDAO<Subject> {
     }
 
     @Override
+    @Transactional
     public void clearTable() {
-        EntityTransaction transaction = manager.getTransaction();
-        transaction.begin();
         Query query = manager.createQuery("DELETE FROM Subject");
         query.executeUpdate();
-        transaction.commit();
     }
 }

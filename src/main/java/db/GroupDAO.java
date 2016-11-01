@@ -1,68 +1,49 @@
 package db;
 
+import db.interfaces.IDAO;
 import model.Group;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by Vlad on 10/21/2016.
- */
+@Component
 public class GroupDAO implements IDAO<Group> {
+    @PersistenceContext
     private EntityManager manager;
 
-    public GroupDAO(EntityManagerFactory factory) {
-        manager = factory.createEntityManager();
+    public GroupDAO() {
     }
 
     @Override
+    @Transactional
     public Group add(Group obj) {
-        EntityTransaction transaction = manager.getTransaction();
-        try {
-            transaction.begin();
-            manager.persist(obj);
-            transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
-        }
+        manager.persist(obj);
         return obj;
     }
 
     @Override
+    @Transactional
     public boolean deactivate(int Id) {
-        EntityTransaction transaction = manager.getTransaction();
         Group group = getById(Id);
         if (group != null) {
-            try {
-                transaction.begin();
-                group.setActive(false);
-                transaction.commit();
-                return true;
-            } catch (Exception e) {
-                transaction.rollback();
-            }
+            group.setActive(false);
+            return true;
         }
         return false;
     }
 
     @Override
+    @Transactional
     public boolean update(Group obj) {
-        EntityTransaction transaction = manager.getTransaction();
-
         Group group = getById(obj.getId());
-
         if (group != null) {
-            try {
-                transaction.begin();
-                group.setStudents(obj.getStudents());
-                group.setActive(obj.isActive());
-                group.setName(obj.getName());
-                group.setCourses(obj.getCourses());
-                transaction.commit();
-                return true;
-            } catch (Exception e) {
-                transaction.rollback();
-            }
+            group.setStudents(obj.getStudents());
+            group.setActive(obj.isActive());
+            group.setName(obj.getName());
+            group.setCourses(obj.getCourses());
+            return true;
         }
         return false;
     }
@@ -79,11 +60,9 @@ public class GroupDAO implements IDAO<Group> {
     }
 
     @Override
+    @Transactional
     public void clearTable() {
-        EntityTransaction transaction = manager.getTransaction();
-        transaction.begin();
         Query query = manager.createQuery("DELETE FROM Group");
         query.executeUpdate();
-        transaction.commit();
     }
 }

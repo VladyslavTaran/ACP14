@@ -1,31 +1,26 @@
 package tests;
 
-import db.*;
+import db.interfaces.IDAO;
+import db.interfaces.IStudentDAO;
 import exception.NoSuchEntityException;
 import model.Group;
 import model.Professor;
 import model.Student;
 import model.Subject;
 import org.junit.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import service.Service;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.io.IOException;
-import java.nio.file.ProviderNotFoundException;
-
-/**
- * Created by Vlad on 11.10.2016.
- */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:app-xml-annot-context.xml"})
 public class ServiceTest {
-    public static final String PWD = "root";
-    public static final String USER = PWD;
-    public static final String DB_TO_RESTORE = "homeworkjpa";
-    public static final String BKP_PATH = DB_TO_RESTORE + "_bkp.sql";
-    private static Service service;
-    private static IStudentDAO<Student> daoStudent = null;
-    private static IDAO<Group> daoGroup = null;
-    private static IDAO<Subject> daoSubject = null;
-    private static IDAO<Professor> daoProfessor = null;
+    @Autowired
+    private Service service;
 
     private Student studentActual = null;
     private Group groupActualFirst = null;
@@ -37,24 +32,13 @@ public class ServiceTest {
     private Subject subjectActual4 = null;
     private Subject subjectActual5 = null;
 
-    @BeforeClass
-    public static void init(){
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory(Constants.JPA_UNIT);
-
-        daoStudent = new StudentDAO(factory);
-        daoGroup = new GroupDAO(factory);
-        daoSubject = new SubjectDAO(factory);
-        daoProfessor = new ProfessorDAO(factory);
-
-        try {
-            service = new Service(daoStudent, daoGroup, daoSubject, daoProfessor);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void init(){
     }
 
     @Before
     public void setUp() {
+        init();
+
         groupActualFirst = service.addGroup("group1", false);
         groupActualSecond = service.addGroup("group2", false);
 
@@ -87,6 +71,7 @@ public class ServiceTest {
     @After
     public void tearDown() {
         service.clearDB();
+        service = null;
     }
 
     @Test
