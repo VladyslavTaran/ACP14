@@ -13,6 +13,6 @@
 
     <artifactId>VladServlets</artifactId>
     <version>1.0</version>
-    <parent>war</parent>
+    <packaging>war</packaging>
 
 </project>
