@@ -19,7 +19,11 @@
         <hibernate-c3p0.version>3.6.3.Final</hibernate-c3p0.version>
     </properties>
 
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
+
+    <build>
+        <finalName></finalName>
+    </build>
 
     <build>
         <plugins>
