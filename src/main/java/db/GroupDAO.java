@@ -3,6 +3,7 @@ package db;
 import db.interfaces.IDAO;
 import model.Group;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;

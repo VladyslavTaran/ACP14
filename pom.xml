@@ -8,6 +8,10 @@
     <artifactId>SQLprj</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <build>
+        <finalName>ACP14Web</finalName>
+    </build>
+
     <properties>
         <maven.version>3.5.1</maven.version>
         <mysql.version>5.1.6</mysql.version>
@@ -25,7 +29,7 @@
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
     </properties>
 
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
 
     <build>
         <plugins>
@@ -157,6 +161,12 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${javax.servlet-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
         </dependency>
 
     </dependencies>
